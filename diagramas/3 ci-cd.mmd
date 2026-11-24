@@ -1,0 +1,8 @@
+flowchart TB
+ G["GitHub · push o pull request o workflow_dispatch"]
+ B["construir · CineCloud API<br/>Docker build y artefacto cinecloud con SHA"]
+ T["probar · Misma imagen<br/>Pruebas funcionales y HTTP"]
+ D["despliegue_simulado<br/>Solo main y no pull request<br/>Registra aprobación sin publicar"]
+ G -->|Inicia workflow| B
+ B -->|Imagen cinecloud con SHA| T
+ T -->|Solo si pasan| D

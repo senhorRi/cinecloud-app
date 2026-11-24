@@ -1,0 +1,8 @@
+Verificación realizada el 24 de noviembre de 2026.
+Comando: python -m unittest discover -s app -v
+Resultado real: 8 pruebas ejecutadas, OK.
+Incluye validación HTTP y concurrencia de ocho solicitudes sobre un asiento.
+Documento renderizado con Word y revisado visualmente en sus siete páginas.
+Docker en laboratorio y GitHub Actions: pendientes de ejecución; no se reportan como aprobados.
+
+Actualización: imagen Docker construida correctamente en Docker Desktop. Cinecloud-evidencia en ejecución y healthy; GET /shows 200, reserva A1 201 y duplicado 409. Ocho pruebas en cinecloud-pruebas aprobaron en 0.965 segundos y finalizaron con código 0. Capturas y registros añadidos. Laboratorio remoto y Actions siguen pendientes.

@@ -1,0 +1,54 @@
+CINECLOUD — GUÍA DE EJECUCIÓN Y ENTREGA
+
+1. Personalizar
+Completar integrantes, código del equipo y grupo en Documento de arquitectura.docx.
+La plantilla de entrega mencionada por el docente no se adjuntó: contrastar sus encabezados si se dispone de ella.
+La fecha de entrega es la publicada por el docente, no una fecha deducida del proyecto.
+
+2. Subir a GitHub
+Crear un repositorio desde el navegador y cargar el contenido de esta carpeta en su raíz.
+No cargar únicamente el ZIP. Crear .github/workflows/ci.yml con la misma ruta si el cargador omite carpetas ocultas.
+Verificar también .dockerignore. Usar main como rama principal para la simulación de despliegue.
+En Actions, revisar construir, probar y despliegue_simulado. Descargar o capturar la evidencia real de la ejecución.
+Si GitHub solicita activar Actions o impone cuotas, comprobar la cuenta; no habilitar facturación de pago.
+
+3. Laboratorio gratuito del navegador
+Abrir un entorno Docker disponible en Killercoda o LabEx. No contratar nube ni registrar tarjeta.
+Clonar el repositorio público de práctica (sin datos personales) o cargar estos archivos usando la interfaz del laboratorio.
+Situarse en la raíz donde están app/ y contenedores/. Ejecutar:
+
+date -Iseconds
+docker build -f contenedores/Dockerfile -t cinecloud:demo .
+docker volume create cinecloud-data
+docker run -d --name cinecloud -p 8080:8080 -v cinecloud-data:/data cinecloud:demo
+date -Iseconds
+docker ps
+curl -i http://localhost:8080/health
+curl -i http://localhost:8080/shows
+curl -i http://localhost:8080/shows/1/seats
+curl -i -X POST http://localhost:8080/reservations -H 'Content-Type: application/json' -d '{"show_id":1,"seat":"A1"}'
+curl -i -X POST http://localhost:8080/reservations -H 'Content-Type: application/json' -d '{"show_id":1,"seat":"A1"}'
+date -Iseconds
+docker logs cinecloud
+
+Esperado con volumen nuevo: /health 200; primera reserva 201; repetición 409.
+Si A1 ya se reservó anteriormente, usar otro asiento libre; no esperar 201 al repetir.
+Usar la vista de puerto 8080 del laboratorio para ver la interfaz web.
+Capturar terminal con fecha visible y guardar los PNG en contenedores/capturas/.
+Nunca incluir contraseñas o tokens en las capturas.
+
+4. Demostrar persistencia
+docker stop cinecloud
+docker rm cinecloud
+docker run -d --name cinecloud -p 8080:8080 -v cinecloud-data:/data cinecloud:demo
+curl http://localhost:8080/shows/1/seats
+El asiento reservado sigue no disponible. El volumen sobrevive al contenedor, pero no se garantiza su conservación cuando caduca el laboratorio.
+
+5. Ejecutar pruebas en Docker
+docker run --rm cinecloud:demo python -m unittest discover -s /app -v
+
+6. Cerrar y entregar
+Verificar todos los puntos de LISTA DE ENTREGA.txt. Incorporar las evidencias y volver a comprimir.
+El ZIP debe incluir .github/workflows/ci.yml y pesar menos de 50 MB.
+No incluir imágenes Docker, archivos .tar, bases .db ni secretos.
+Un integrante sube el ZIP a la plataforma. No se ha realizado ninguna publicación automática.

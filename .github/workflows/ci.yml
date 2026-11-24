@@ -1,0 +1,47 @@
+name: CineCloud CI
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Construir CineCloud API
+        run: docker build -f contenedores/Dockerfile -t cinecloud:${{ github.sha }} .
+      - name: Guardar imagen
+        run: docker save cinecloud:${{ github.sha }} -o /tmp/cinecloud.tar
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cinecloud-image
+          path: /tmp/cinecloud.tar
+          retention-days: 1
+  probar:
+    needs: construir
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: cinecloud-image
+          path: /tmp
+      - name: Cargar imagen construida
+        run: docker load -i /tmp/cinecloud.tar
+      - name: Pruebas funcionales y concurrencia
+        run: docker run --rm cinecloud:${{ github.sha }} python -m unittest discover -s /app -v
+      - name: Prueba HTTP del contenedor
+        run: |
+          docker run -d --name cinecloud -p 8080:8080 cinecloud:${{ github.sha }}
+          trap 'docker logs cinecloud; docker rm -f cinecloud' EXIT
+          for i in $(seq 1 20); do
+            if curl --fail --silent http://localhost:8080/health; then break; fi
+            sleep 1
+          done
+          curl --fail --silent http://localhost:8080/health
+          curl --fail --silent http://localhost:8080/shows
+  despliegue_simulado:
+    needs: probar
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Registrar promoción simulada
+        run: echo "SIMULACIÓN aprobada para CineCloud API con imagen cinecloud:${{ github.sha }}. No se publica en una nube real."

@@ -1,0 +1,23 @@
+2026-11-24T17:53:09.830588217Z 2026-11-24T17:53:09+00:00
+2026-11-24T17:53:10.762078501Z test_catalog_and_capacity (test_app.CineCloudTests.test_catalog_and_capacity) ... ok
+2026-11-24T17:53:10.858038614Z test_concurrent_same_seat (test_app.CineCloudTests.test_concurrent_same_seat) ... ok
+2026-11-24T17:53:10.909213247Z test_different_shows (test_app.CineCloudTests.test_different_shows) ... ok
+2026-11-24T17:53:10.952261636Z test_duplicate_rejected (test_app.CineCloudTests.test_duplicate_rejected) ... ok
+2026-11-24T17:53:11.027012284Z test_http_contract (test_app.CineCloudTests.test_http_contract) ... 127.0.0.1 - - [24/Nov/2026 17:53:11] "GET /health HTTP/1.1" 200 -
+2026-11-24T17:53:11.030464814Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "GET / HTTP/1.1" 200 -
+2026-11-24T17:53:11.034348251Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "GET /shows/1/seats HTTP/1.1" 200 -
+2026-11-24T17:53:11.047368190Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "POST /reservations HTTP/1.1" 201 -
+2026-11-24T17:53:11.051716788Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "POST /reservations HTTP/1.1" 409 -
+2026-11-24T17:53:11.055939842Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "POST /reservations HTTP/1.1" 400 -
+2026-11-24T17:53:11.059376473Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "POST /reservations HTTP/1.1" 415 -
+2026-11-24T17:53:11.062220733Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "POST /reservations HTTP/1.1" 413 -
+2026-11-24T17:53:11.065422377Z 127.0.0.1 - - [24/Nov/2026 17:53:11] "GET /missing HTTP/1.1" 404 -
+2026-11-24T17:53:11.567282202Z ok
+2026-11-24T17:53:11.618701875Z test_reservation_persists (test_app.CineCloudTests.test_reservation_persists) ... ok
+2026-11-24T17:53:11.652779401Z test_unknown_show (test_app.CineCloudTests.test_unknown_show) ... ok
+2026-11-24T17:53:11.685860458Z test_validation (test_app.CineCloudTests.test_validation) ... ok
+2026-11-24T17:53:11.685897467Z 
+2026-11-24T17:53:11.685903348Z ----------------------------------------------------------------------
+2026-11-24T17:53:11.685909489Z Ran 8 tests in 0.965s
+2026-11-24T17:53:11.685914829Z 
+2026-11-24T17:53:11.685919668Z OK

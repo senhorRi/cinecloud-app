@@ -1,0 +1,10 @@
+flowchart TB
+ W["Interfaz CineCloud<br/>[Contenedor · HTML y JavaScript]"]
+ subgraph API["CineCloud API · Contenedor Python"]
+ H["Controlador HTTP<br/>[Componente · Python]"]
+ S["Servicio de reservas y cartelera<br/>[Componente · Store · Python]"]
+ H -->|Llamadas Python| S
+ end
+ D[("Base de datos CineCloud<br/>[Contenedor de datos · SQLite]")]
+ W -->|HTTP y JSON| H
+ S -->|SQL parametrizado| D

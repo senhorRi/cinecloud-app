@@ -1,0 +1,11 @@
+flowchart TB
+ B["Navegador del cliente · Interfaz CineCloud"]
+ subgraph LAB["Nodo del laboratorio · Host Linux y Docker"]
+ A["Contenedor cinecloud · CineCloud API · Python · Puerto 8080"]
+ V[("Volumen cinecloud-data · Base de datos CineCloud · SQLite")]
+ A -->|Archivo /data/cinecloud.db| V
+ end
+ B -->|HTTP vía vista de puerto| A
+ subgraph FUTURO["Objetivo PaaS · Diseño futuro no desplegado"]
+ T["HTTPS → réplicas CineCloud API → PostgreSQL administrado"]
+ end

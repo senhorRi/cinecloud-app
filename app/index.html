@@ -1,0 +1,19 @@
+<!doctype html><html lang="es"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CineCloud</title><style>
+body{font:17px system-ui;background:#101625;color:#ecf1fa;margin:0}main{max-width:780px;margin:45px auto;padding:24px}
+h1{font-size:42px;margin-bottom:4px}p{line-height:1.6}select,button{font:inherit;padding:12px;border-radius:8px;border:0}
+select{width:100%}#seats{display:grid;grid-template-columns:repeat(10,1fr);gap:7px;margin:25px 0}
+button{background:#92e1cc;color:#102b28;cursor:pointer;padding:12px 0}button:disabled{background:#414b5e;color:#adb6c7;cursor:default}
+.screen{border-top:5px solid #c2cbe2;text-align:center;margin-top:30px;padding-top:8px}#status{min-height:55px}
+@media(max-width:500px){#seats{gap:3px}button{font-size:12px}main{padding:12px}}
+</style><main><p>PROYECTO ACADÉMICO · SALA ÚNICA</p><h1>CineCloud</h1><p>Selecciona una función y pulsa un asiento disponible para reservarlo. Demostración sin pagos ni datos personales.</p>
+<label for="shows">Función</label><select id="shows"></select><div class="screen">PANTALLA</div><div id="seats"></div>
+<p>Verde: disponible · Gris: reservado</p><p id="status" role="status" aria-live="polite"></p></main>
+<script>
+const shows=document.querySelector('#shows'), seats=document.querySelector('#seats'), status=document.querySelector('#status');
+async function load(){const r=await fetch('/shows/'+shows.value+'/seats');if(!r.ok)throw Error('No se pudieron cargar los asientos');
+const data=await r.json();seats.replaceChildren();for(const s of data){const b=document.createElement('button');b.textContent=s.seat;b.disabled=!s.available;
+b.setAttribute('aria-label',s.seat+(s.available?' disponible':' reservado'));b.onclick=async()=>{b.disabled=true;try{const r=await fetch('/reservations',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({show_id:Number(shows.value),seat:s.seat})});const d=await r.json();status.textContent=r.ok?'Reserva '+d.id+' confirmada para el asiento '+d.seat:d.error;await load()}catch(e){status.textContent='Error de conexión. Actualiza la disponibilidad antes de reintentar.'}};seats.append(b)}}
+shows.onchange=()=>load().catch(e=>status.textContent=e.message);
+fetch('/shows').then(r=>{if(!r.ok)throw Error('Servicio no disponible');return r.json()}).then(data=>{for(const s of data){const o=document.createElement('option');o.value=s.id;o.textContent=s.movie+' — '+s.starts;shows.append(o)}return load()}).catch(e=>status.textContent=e.message);
+</script></html>

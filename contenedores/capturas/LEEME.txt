@@ -1,0 +1,9 @@
+EVIDENCIAS REALES DE DOCKER DESKTOP LOCAL
+Fecha: 24 de noviembre de 2026. Las horas de los registros del contenedor están en UTC.
+01-contenedor-activo.png: CineCloud ejecutándose, puerto 8080 y salud HTTP 200.
+02-reserva-y-conflicto.png: peticiones reales con respuestas HTTP 201 y 409.
+03-pruebas-en-contenedor.png: ocho pruebas aprobadas; salida del contenedor de pruebas con código 0.
+Se incluyen los registros originales con marcas de tiempo.
+Imagen: cinecloud:demo. Servicio: cinecloud-evidencia. Pruebas: cinecloud-pruebas.
+Estas capturas corresponden al PC del usuario, no a LabEx ni Killercoda. El enunciado pide evidencia en uno de esos laboratorios; esa parte sigue pendiente si el docente exige ese entorno.
+GitHub Actions no se ejecutó en esta sesión.

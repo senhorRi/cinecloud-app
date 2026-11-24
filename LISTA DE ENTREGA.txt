@@ -1,0 +1,12 @@
+[HECHO] Dominio sala de cine y cuatro capacidades.
+[HECHO] Arquitectura con modelo PaaS, decisiones y riesgos.
+[HECHO] Tres diagramas PNG y fuentes Mermaid .mmd.
+[HECHO] Servicio web, pruebas y Dockerfile.
+[HECHO] Workflow con construir, probar y despliegue simulado.
+[PENDIENTE] Nombres de integrantes, grupo y nombre definitivo del equipo.
+[PENDIENTE] Contrastar con la plantilla del docente si contiene campos adicionales.
+[HECHO] Ejecutar Docker Desktop local, obtener capturas con fecha y aprobar ocho pruebas dentro del contenedor.
+[PENDIENTE] Repetir en LabEx o Killercoda si se exige el entorno del enunciado.
+[PENDIENTE] Ejecutar workflow en GitHub Actions y guardar evidencia de etapas exitosas.
+[PENDIENTE] Ensayar sustentación y cargar el ZIP definitivo a la plataforma.
+No afirmar que el laboratorio o GitHub Actions pasaron sin realizar esas ejecuciones.
